@@ -1,37 +1,6 @@
 #include <GL/glut.h>
 
-// Maze is 8 x 8 cells. Row 0 = bottom, column 0 = left.
-const int   GRID_SIZE = 8;
-const float CELL_SIZE = 0.22f;
-const float MAZE_LEFT = -0.88f;
-const float MAZE_BOTTOM = -0.88f;
 const int PLAYER_VERTEX_COUNT = 18;
-
-// 1 = wall, 0 = open
-// Horizontal walls: row r is the line below cell row r (9 lines, 8 columns)
-int hWall[9][8] = {
-    {0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 1, 1, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 1, 0, 0},
-    {0, 0, 1, 0, 1, 0, 1, 0},
-    {0, 0, 0, 0, 0, 1, 0, 0},
-    {0, 1, 0, 0, 1, 0, 1, 0},
-    {1, 0, 0, 1, 0, 0, 0, 1},
-    {0, 0, 0, 0, 0, 0, 1, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0}
-};
-
-// Vertical walls: column c is the line left of cell column c (8 rows, 9 lines)
-int vWall[8][9] = {
-    {0, 1, 0, 0, 0, 0, 1, 0, 0},
-    {0, 1, 1, 0, 0, 1, 0, 1, 0},
-    {0, 1, 1, 1, 1, 0, 1, 0, 0},
-    {0, 1, 0, 1, 0, 1, 0, 1, 0},
-    {0, 1, 1, 1, 1, 0, 1, 1, 0},
-    {0, 0, 1, 1, 0, 1, 1, 0, 0},
-    {0, 1, 1, 1, 1, 1, 1, 0, 0},
-    {0, 0, 0, 1, 0, 1, 0, 0, 0}
-};
 
 // Player (starts in the bottom-left cell)
 float playerX = -0.77f;
@@ -75,46 +44,48 @@ void drawOuterWall()
     glLineWidth(1.0f);
 }
 
+void drawWallStrip(float x1, float y1, float x2, float y2)
+{
+    glBegin(GL_LINE_STRIP);
+        glVertex2f(x1, y1);
+        glVertex2f(x2, y2);
+    glEnd();
+}
+
 void drawMaze()
 {
     glColor3f(1.0f, 0.0f, 0.0f);
     glLineWidth(4.0f);
 
-    // Horizontal walls
-    for (int r = 0; r <= GRID_SIZE; r++)
-    {
-        for (int c = 0; c < GRID_SIZE; c++)
-        {
-            if (hWall[r][c] == 1)
-            {
-                float x = MAZE_LEFT + c * CELL_SIZE;
-                float y = MAZE_BOTTOM + r * CELL_SIZE;
+    drawWallStrip(-0.66f, -0.88f, -0.66f, -0.66f);
+    drawWallStrip(-0.44f, -0.66f,  0.22f, -0.66f);
+    drawWallStrip( 0.44f, -0.88f,  0.44f, -0.66f);
+    drawWallStrip( 0.66f, -0.66f,  0.88f, -0.66f);
 
-                glBegin(GL_LINE_STRIP);
-                    glVertex2f(x, y);
-                    glVertex2f(x + CELL_SIZE, y);
-                glEnd();
-            }
-        }
-    }
+    drawWallStrip(-0.88f, -0.44f, -0.66f, -0.44f);
+    drawWallStrip(-0.44f, -0.66f, -0.44f, -0.22f);
+    drawWallStrip(-0.22f, -0.44f,  0.22f, -0.44f);
+    drawWallStrip( 0.22f, -0.66f,  0.22f, -0.22f);
+    drawWallStrip( 0.44f, -0.44f,  0.66f, -0.44f);
+    drawWallStrip( 0.66f, -0.44f,  0.66f, -0.22f);
 
-    // Vertical walls
-    for (int r = 0; r < GRID_SIZE; r++)
-    {
-        for (int c = 0; c <= GRID_SIZE; c++)
-        {
-            if (vWall[r][c] == 1)
-            {
-                float x = MAZE_LEFT + c * CELL_SIZE;
-                float y = MAZE_BOTTOM + r * CELL_SIZE;
+    drawWallStrip(-0.66f, -0.22f, -0.66f,  0.22f);
+    drawWallStrip(-0.66f,  0.00f, -0.44f,  0.00f);
+    drawWallStrip(-0.22f, -0.22f, -0.22f,  0.22f);
+    drawWallStrip( 0.00f, -0.22f,  0.44f, -0.22f);
+    drawWallStrip( 0.44f, -0.22f,  0.44f,  0.22f);
+    drawWallStrip( 0.66f,  0.00f,  0.88f,  0.00f);
 
-                glBegin(GL_LINE_STRIP);
-                    glVertex2f(x, y);
-                    glVertex2f(x, y + CELL_SIZE);
-                glEnd();
-            }
-        }
-    }
+    drawWallStrip(-0.88f,  0.22f, -0.44f,  0.22f);
+    drawWallStrip(-0.44f,  0.22f, -0.44f,  0.66f);
+    drawWallStrip(-0.22f,  0.44f,  0.22f,  0.44f);
+    drawWallStrip( 0.22f,  0.22f,  0.22f,  0.66f);
+    drawWallStrip( 0.44f,  0.44f,  0.66f,  0.44f);
+    drawWallStrip( 0.66f,  0.22f,  0.66f,  0.66f);
+
+    drawWallStrip(-0.66f,  0.66f, -0.22f,  0.66f);
+    drawWallStrip( 0.00f,  0.66f,  0.44f,  0.66f);
+    drawWallStrip( 0.66f,  0.66f,  0.88f,  0.66f);
 
     glLineWidth(1.0f);
 }
@@ -144,30 +115,6 @@ void drawPlayer()
     glPopMatrix();
 }
 
-void display()
-{
-    glClear(GL_COLOR_BUFFER_BIT);
-    glLoadIdentity();
-
-    drawOuterWall();
-    drawMaze();
-    drawTriangle();
-    drawPlayer();
-
-    glutSwapBuffers();
-}
-
-// Keeps the drawing square so the circle is not stretched
-void reshape(int width, int height)
-{
-    int side = width;
-    if (height < width)
-    {
-        side = height;
-    }
-    glViewport((width - side) / 2, (height - side) / 2, side, side);
-}
-
 void initialize()
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -178,6 +125,19 @@ void initialize()
     glMatrixMode(GL_MODELVIEW);
 }
 
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    glLoadIdentity();
+    drawOuterWall();
+    drawMaze();
+    drawTriangle();
+    drawPlayer();
+    glutSwapBuffers();
+}
+
+
+
 int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
@@ -185,10 +145,10 @@ int main(int argc, char** argv)
     glutInitWindowSize(1024, 768);
     glutInitWindowPosition(200, 50);
     glutCreateWindow("2D Maze Game");
-
+    
+    
     initialize();
     glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
     glutMainLoop();
 
     return 0;
