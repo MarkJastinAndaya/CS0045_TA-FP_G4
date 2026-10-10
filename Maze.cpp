@@ -123,7 +123,6 @@ void drawTriangle()
 {
     glColor3f(0.0f, 1.0f, 0.0f);
 
-    // Static triangle shape. The blue circle is the only controlled object.
     glBegin(GL_TRIANGLES);
         glVertex2f(0.72f, 0.72f);
         glVertex2f(0.82f, 0.72f);
