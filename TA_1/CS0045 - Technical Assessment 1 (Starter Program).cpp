@@ -195,7 +195,7 @@ void drawInstructions()
     glutBitmapString(
         GLUT_BITMAP_HELVETICA_18,
         reinterpret_cast<const unsigned char*>(
-            "W - Move Up | S - Move Down"
+            "W = Move Up | S = Move Down"
         )
     );
 
@@ -204,7 +204,7 @@ void drawInstructions()
     glutBitmapString(
         GLUT_BITMAP_HELVETICA_18,
         reinterpret_cast<const unsigned char*>(
-            "A - Move Left | D - Move Right | R - Reset"
+            "A = Move Left | D = Move Right | R = Reset"
         )
     );
 }
