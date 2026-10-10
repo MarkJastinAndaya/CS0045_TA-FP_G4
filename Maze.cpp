@@ -24,25 +24,24 @@ float playerX = -0.77f;
 float playerY = -0.77f;
 
 GLfloat playerVertices[] = {
-    0.000f,  0.000f,
-    0.050f,  0.000f,
-    0.046f,  0.019f,
-    0.035f,  0.035f,
-    0.019f,  0.046f,
-    0.000f,  0.050f,
-   -0.019f,  0.046f,
-   -0.035f,  0.035f,
-   -0.046f,  0.019f,
-   -0.050f,  0.000f,
-   -0.046f, -0.019f,
-   -0.035f, -0.035f,
-   -0.019f, -0.046f,
+    0.000f, 0.000f,
+    0.050f, 0.000f,
+    0.046f, 0.019f,
+    0.035f, 0.035f,
+    0.019f, 0.046f,
+    0.000f, 0.050f,
+    -0.019f, 0.046f,
+    -0.035f, 0.035f,
+    -0.046f, 0.019f,
+    -0.050f, 0.000f,
+    -0.046f, -0.019f,
+    -0.035f, -0.035f,
+    -0.019f, -0.046f,
     0.000f, -0.050f,
     0.019f, -0.046f,
     0.035f, -0.035f,
     0.046f, -0.019f,
-    0.050f,  0.000f
-};
+    0.050f, 0.000f};
 
 // ------------------------------------------------------------
 // Function Prototypes
@@ -54,11 +53,12 @@ void drawWallStrip(float x1, float y1, float x2, float y2);
 void drawMaze();
 void drawTriangle();
 void drawPlayer();
+void keyboard(unsigned char key, int x, int y);
 
 // ------------------------------------------------------------
 // Main Function
 // ------------------------------------------------------------
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
     glutInit(&argc, argv);
 
@@ -71,6 +71,7 @@ int main(int argc, char** argv)
 
     initialize();
     glutDisplayFunc(display);
+    glutKeyboardFunc(keyboard);
 
     glutMainLoop();
 
@@ -94,7 +95,6 @@ void initialize()
 // Text
 // ------------------------------------------------------------
 
-
 // ------------------------------------------------------------
 // Maze Walls
 // ------------------------------------------------------------
@@ -104,10 +104,10 @@ void drawOuterWall()
     glLineWidth(6.0f);
 
     glBegin(GL_LINE_LOOP);
-        glVertex2f(-0.88f, -0.88f);
-        glVertex2f( 0.88f, -0.88f);
-        glVertex2f( 0.88f,  0.88f);
-        glVertex2f(-0.88f,  0.88f);
+    glVertex2f(-0.88f, -0.88f);
+    glVertex2f(0.88f, -0.88f);
+    glVertex2f(0.88f, 0.88f);
+    glVertex2f(-0.88f, 0.88f);
     glEnd();
 
     glLineWidth(1.0f);
@@ -116,8 +116,8 @@ void drawOuterWall()
 void drawWallStrip(float x1, float y1, float x2, float y2)
 {
     glBegin(GL_LINE_STRIP);
-        glVertex2f(x1, y1);
-        glVertex2f(x2, y2);
+    glVertex2f(x1, y1);
+    glVertex2f(x2, y2);
     glEnd();
 }
 
@@ -127,34 +127,34 @@ void drawMaze()
     glLineWidth(4.0f);
 
     drawWallStrip(-0.66f, -0.88f, -0.66f, -0.66f);
-    drawWallStrip(-0.44f, -0.66f,  0.22f, -0.66f);
-    drawWallStrip( 0.44f, -0.88f,  0.44f, -0.66f);
-    drawWallStrip( 0.66f, -0.66f,  0.88f, -0.66f);
+    drawWallStrip(-0.44f, -0.66f, 0.22f, -0.66f);
+    drawWallStrip(0.44f, -0.88f, 0.44f, -0.66f);
+    drawWallStrip(0.66f, -0.66f, 0.88f, -0.66f);
 
     drawWallStrip(-0.88f, -0.44f, -0.66f, -0.44f);
     drawWallStrip(-0.44f, -0.66f, -0.44f, -0.22f);
-    drawWallStrip(-0.22f, -0.44f,  0.22f, -0.44f);
-    drawWallStrip( 0.22f, -0.66f,  0.22f, -0.22f);
-    drawWallStrip( 0.44f, -0.44f,  0.66f, -0.44f);
-    drawWallStrip( 0.66f, -0.44f,  0.66f, -0.22f);
+    drawWallStrip(-0.22f, -0.44f, 0.22f, -0.44f);
+    drawWallStrip(0.22f, -0.66f, 0.22f, -0.22f);
+    drawWallStrip(0.44f, -0.44f, 0.66f, -0.44f);
+    drawWallStrip(0.66f, -0.44f, 0.66f, -0.22f);
 
-    drawWallStrip(-0.66f, -0.22f, -0.66f,  0.22f);
-    drawWallStrip(-0.66f,  0.00f, -0.44f,  0.00f);
-    drawWallStrip(-0.22f, -0.22f, -0.22f,  0.22f);
-    drawWallStrip( 0.00f, -0.22f,  0.44f, -0.22f);
-    drawWallStrip( 0.44f, -0.22f,  0.44f,  0.22f);
-    drawWallStrip( 0.66f,  0.00f,  0.88f,  0.00f);
+    drawWallStrip(-0.66f, -0.22f, -0.66f, 0.22f);
+    drawWallStrip(-0.66f, 0.00f, -0.44f, 0.00f);
+    drawWallStrip(-0.22f, -0.22f, -0.22f, 0.22f);
+    drawWallStrip(0.00f, -0.22f, 0.44f, -0.22f);
+    drawWallStrip(0.44f, -0.22f, 0.44f, 0.22f);
+    drawWallStrip(0.66f, 0.00f, 0.88f, 0.00f);
 
-    drawWallStrip(-0.88f,  0.22f, -0.44f,  0.22f);
-    drawWallStrip(-0.44f,  0.22f, -0.44f,  0.66f);
-    drawWallStrip(-0.22f,  0.44f,  0.22f,  0.44f);
-    drawWallStrip( 0.22f,  0.22f,  0.22f,  0.66f);
-    drawWallStrip( 0.44f,  0.44f,  0.66f,  0.44f);
-    drawWallStrip( 0.66f,  0.22f,  0.66f,  0.66f);
+    drawWallStrip(-0.88f, 0.22f, -0.44f, 0.22f);
+    drawWallStrip(-0.44f, 0.22f, -0.44f, 0.66f);
+    drawWallStrip(-0.22f, 0.44f, 0.22f, 0.44f);
+    drawWallStrip(0.22f, 0.22f, 0.22f, 0.66f);
+    drawWallStrip(0.44f, 0.44f, 0.66f, 0.44f);
+    drawWallStrip(0.66f, 0.22f, 0.66f, 0.66f);
 
-    drawWallStrip(-0.66f,  0.66f, -0.22f,  0.66f);
-    drawWallStrip( 0.00f,  0.66f,  0.44f,  0.66f);
-    drawWallStrip( 0.66f,  0.66f,  0.88f,  0.66f);
+    drawWallStrip(-0.66f, 0.66f, -0.22f, 0.66f);
+    drawWallStrip(0.00f, 0.66f, 0.44f, 0.66f);
+    drawWallStrip(0.66f, 0.66f, 0.88f, 0.66f);
 
     glLineWidth(1.0f);
 }
@@ -167,9 +167,9 @@ void drawTriangle()
     glColor3f(0.0f, 1.0f, 0.0f);
 
     glBegin(GL_TRIANGLES);
-        glVertex2f(0.72f, 0.72f);
-        glVertex2f(0.82f, 0.72f);
-        glVertex2f(0.77f, 0.82f);
+    glVertex2f(0.72f, 0.72f);
+    glVertex2f(0.82f, 0.72f);
+    glVertex2f(0.77f, 0.82f);
     glEnd();
 }
 
@@ -181,12 +181,12 @@ void drawPlayer()
     glColor3f(0.0f, 0.0f, 1.0f);
 
     glPushMatrix();
-        glTranslatef(playerX, playerY, 0.0f);
+    glTranslatef(playerX, playerY, 0.0f);
 
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glVertexPointer(2, GL_FLOAT, 0, playerVertices);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, PLAYER_VERTEX_COUNT);
-        glDisableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(2, GL_FLOAT, 0, playerVertices);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, PLAYER_VERTEX_COUNT);
+    glDisableClientState(GL_VERTEX_ARRAY);
     glPopMatrix();
 }
 
@@ -207,6 +207,112 @@ void display()
 }
 
 // ------------------------------------------------------------
+// Wall Collisions
+// ------------------------------------------------------------
+struct WallSegment
+{
+    float x1, y1, x2, y2;
+};
+
+bool touchesWall(float x, float y)
+{
+    static const WallSegment walls[] = {
+        {-0.88f, -0.88f, 0.88f, -0.88f},
+        {0.88f, -0.88f, 0.88f, 0.88f},
+        {-0.88f, 0.88f, 0.88f, 0.88f},
+        {-0.88f, -0.88f, -0.88f, 0.88f},
+        {-0.66f, -0.88f, -0.66f, -0.66f},
+        {-0.44f, -0.66f, 0.22f, -0.66f},
+        {0.44f, -0.88f, 0.44f, -0.66f},
+        {0.66f, -0.66f, 0.88f, -0.66f},
+        {-0.88f, -0.44f, -0.66f, -0.44f},
+        {-0.44f, -0.66f, -0.44f, -0.22f},
+        {-0.22f, -0.44f, 0.22f, -0.44f},
+        {0.22f, -0.66f, 0.22f, -0.22f},
+        {0.44f, -0.44f, 0.66f, -0.44f},
+        {0.66f, -0.44f, 0.66f, -0.22f},
+        {-0.66f, -0.22f, -0.66f, 0.22f},
+        {-0.66f, 0.00f, -0.44f, 0.00f},
+        {-0.22f, -0.22f, -0.22f, 0.22f},
+        {0.00f, -0.22f, 0.44f, -0.22f},
+        {0.44f, -0.22f, 0.44f, 0.22f},
+        {0.66f, 0.00f, 0.88f, 0.00f},
+        {-0.88f, 0.22f, -0.44f, 0.22f},
+        {-0.44f, 0.22f, -0.44f, 0.66f},
+        {-0.22f, 0.44f, 0.22f, 0.44f},
+        {0.22f, 0.22f, 0.22f, 0.66f},
+        {0.44f, 0.44f, 0.66f, 0.44f},
+        {0.66f, 0.22f, 0.66f, 0.66f},
+        {-0.66f, 0.66f, -0.22f, 0.66f},
+        {0.00f, 0.66f, 0.44f, 0.66f},
+        {0.66f, 0.66f, 0.88f, 0.66f}};
+
+    const float playerRadius = 0.060f;
+
+    for (unsigned int i = 0; i < sizeof(walls) / sizeof(walls[0]); ++i)
+    {
+        float closestX = x;
+        float closestY = y;
+
+        if (closestX < walls[i].x1)
+            closestX = walls[i].x1;
+        if (closestX > walls[i].x2)
+            closestX = walls[i].x2;
+        if (closestY < walls[i].y1)
+            closestY = walls[i].y1;
+        if (closestY > walls[i].y2)
+            closestY = walls[i].y2;
+
+        float dx = x - closestX;
+        float dy = y - closestY;
+        if (dx * dx + dy * dy < playerRadius * playerRadius)
+            return true;
+    }
+    return false;
+}
+
+// ------------------------------------------------------------
 // Keyboard Callback
 // ------------------------------------------------------------
+void keyboard(unsigned char key, int, int)
+{
+    const float step = 0.025f;
+    float nextX = playerX;
+    float nextY = playerY;
 
+    switch (key)
+    {
+    case 'w':
+    case 'W':
+        nextY += step;
+        break;
+    case 'a':
+    case 'A':
+        nextX -= step;
+        break;
+    case 's':
+    case 'S':
+        nextY -= step;
+        break;
+    case 'd':
+    case 'D':
+        nextX += step;
+        break;
+    case 'r':
+    case 'R':
+        playerX = -0.77f;
+        playerY = -0.77f;
+        glutPostRedisplay();
+        return;
+    default:
+        return;
+    }
+
+    if (!touchesWall(nextX, nextY))
+    {
+        playerX = nextX;
+        playerY = nextY;
+    }
+
+    glutPostRedisplay();
+}
