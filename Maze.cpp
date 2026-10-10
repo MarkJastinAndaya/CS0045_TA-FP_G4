@@ -97,13 +97,29 @@ void initialize()
 // ------------------------------------------------------------
 void drawInstructions()
 {
-    const unsigned char text[] = "WASD - Navigate Maze | R - Restart";
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
     glColor3f(1.0f, 1.0f, 1.0f);
-    glRasterPos2f(-0.92f, 0.92f);
-    glutBitmapString(GLUT_BITMAP_HELVETICA_18, text);
-}
 
+    glRasterPos2f(-0.95f, 0.90f);
+
+    glutBitmapString(
+        GLUT_BITMAP_HELVETICA_18,
+        reinterpret_cast<const unsigned char*>(
+            "W = Move Up | S = Move Down"
+        )
+    );
+
+    glRasterPos2f(-0.95f, 0.82f);
+
+    glutBitmapString(
+        GLUT_BITMAP_HELVETICA_18,
+        reinterpret_cast<const unsigned char*>(
+            "A = Move Left | D = Move Right | R = Reset"
+        )
+    );
+}
 // ------------------------------------------------------------
 // Maze Walls
 // ------------------------------------------------------------
