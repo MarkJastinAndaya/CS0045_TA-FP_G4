@@ -1,12 +1,28 @@
-#include <GL/glut.h>
+/*
+    CS0045 - Technical Assessment 1
+    OpenGL Maze Game
 
+    Requirements covered in this file:
+    - Complete scene with maze walls, player, and triangle shape
+    - At least two OpenGL primitive types
+    - At least three colors
+    - Player rendered using a vertex array
+*/
+
+#include <iostream>
+#include <GL/glut.h>
+#include <GL/freeglut_ext.h>
+
+using namespace std;
+
+// ------------------------------------------------------------
+// Global Variables
+// ------------------------------------------------------------
 const int PLAYER_VERTEX_COUNT = 18;
 
-// Player (starts in the bottom-left cell)
 float playerX = -0.77f;
 float playerY = -0.77f;
 
-// Vertex array for the player circle: center + 16 rim points + repeated first rim point
 GLfloat playerVertices[] = {
     0.000f,  0.000f,
     0.050f,  0.000f,
@@ -28,17 +44,70 @@ GLfloat playerVertices[] = {
     0.050f,  0.000f
 };
 
+// ------------------------------------------------------------
+// Function Prototypes
+// ------------------------------------------------------------
+void initialize();
+void display();
+void drawOuterWall();
+void drawWallStrip(float x1, float y1, float x2, float y2);
+void drawMaze();
+void drawTriangle();
+void drawPlayer();
+
+// ------------------------------------------------------------
+// Main Function
+// ------------------------------------------------------------
+int main(int argc, char** argv)
+{
+    glutInit(&argc, argv);
+
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+
+    glutInitWindowSize(1024, 768);
+    glutInitWindowPosition(200, 50);
+
+    glutCreateWindow("CS0045 - Technical Assessment 1");
+
+    initialize();
+    glutDisplayFunc(display);
+
+    glutMainLoop();
+
+    return 0;
+}
+
+// ------------------------------------------------------------
+// OpenGL Setup
+// ------------------------------------------------------------
+void initialize()
+{
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+    glMatrixMode(GL_MODELVIEW);
+}
+
+// ------------------------------------------------------------
+// Text
+// ------------------------------------------------------------
+
+
+// ------------------------------------------------------------
+// Maze Walls
+// ------------------------------------------------------------
 void drawOuterWall()
 {
     glColor3f(1.0f, 0.0f, 0.0f);
     glLineWidth(6.0f);
 
-    // Outer wall is manually plotted point by point.
     glBegin(GL_LINE_LOOP);
-    glVertex2f(-0.88f, -0.88f); // bottom-left
-    glVertex2f( 0.88f, -0.88f); // bottom-right
-    glVertex2f( 0.88f,  0.88f); // top-right
-    glVertex2f(-0.88f,  0.88f); // top-left
+        glVertex2f(-0.88f, -0.88f);
+        glVertex2f( 0.88f, -0.88f);
+        glVertex2f( 0.88f,  0.88f);
+        glVertex2f(-0.88f,  0.88f);
     glEnd();
 
     glLineWidth(1.0f);
@@ -90,6 +159,9 @@ void drawMaze()
     glLineWidth(1.0f);
 }
 
+// ------------------------------------------------------------
+// Static Triangle Shape
+// ------------------------------------------------------------
 void drawTriangle()
 {
     glColor3f(0.0f, 1.0f, 0.0f);
@@ -101,6 +173,9 @@ void drawTriangle()
     glEnd();
 }
 
+// ------------------------------------------------------------
+// Vertex Array Player
+// ------------------------------------------------------------
 void drawPlayer()
 {
     glColor3f(0.0f, 0.0f, 1.0f);
@@ -115,41 +190,23 @@ void drawPlayer()
     glPopMatrix();
 }
 
-void initialize()
-{
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
-    glMatrixMode(GL_MODELVIEW);
-}
-
+// ------------------------------------------------------------
+// Display Callback
+// ------------------------------------------------------------
 void display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
+
     drawOuterWall();
     drawMaze();
     drawTriangle();
     drawPlayer();
-    glutSwapBuffers();
+
+    glFlush();
 }
 
+// ------------------------------------------------------------
+// Keyboard Callback
+// ------------------------------------------------------------
 
-
-int main(int argc, char** argv)
-{
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-    glutInitWindowSize(1024, 768);
-    glutInitWindowPosition(200, 50);
-    glutCreateWindow("2D Maze Game");
-    
-    
-    initialize();
-    glutDisplayFunc(display);
-    glutMainLoop();
-
-    return 0;
-}
