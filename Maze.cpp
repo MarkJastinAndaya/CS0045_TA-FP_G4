@@ -48,6 +48,7 @@ GLfloat playerVertices[] = {
 // ------------------------------------------------------------
 void initialize();
 void display();
+void drawInstructions();
 void drawOuterWall();
 void drawWallStrip(float x1, float y1, float x2, float y2);
 void drawMaze();
@@ -94,6 +95,14 @@ void initialize()
 // ------------------------------------------------------------
 // Text
 // ------------------------------------------------------------
+void drawInstructions()
+{
+    const unsigned char text[] = "WASD - Navigate Maze | R - Restart";
+
+    glColor3f(1.0f, 1.0f, 1.0f);
+    glRasterPos2f(-0.92f, 0.92f);
+    glutBitmapString(GLUT_BITMAP_HELVETICA_18, text);
+}
 
 // ------------------------------------------------------------
 // Maze Walls
@@ -198,10 +207,17 @@ void display()
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
 
-    drawOuterWall();
-    drawMaze();
-    drawTriangle();
-    drawPlayer();
+    drawInstructions();
+
+    glPushMatrix();
+        glTranslatef(0.0f, -0.10f, 0.0f);
+        glScalef(0.86f, 0.86f, 1.0f);
+
+        drawOuterWall();
+        drawMaze();
+        drawTriangle();
+        drawPlayer();
+    glPopMatrix();
 
     glFlush();
 }
