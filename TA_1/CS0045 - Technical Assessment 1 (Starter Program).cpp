@@ -179,3 +179,32 @@ void keyboard(unsigned char key, int x, int y)
     (void)x;
     (void)y;
 }
+
+// ------------------------------------------------------------
+// USER INSTRUCTIONS
+// ------------------------------------------------------------
+void drawInstructions()
+{
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glColor3f(1.0f, 1.0f, 1.0f);
+
+    glRasterPos2f(-0.95f, 0.90f);
+
+    glutBitmapString(
+        GLUT_BITMAP_HELVETICA_18,
+        reinterpret_cast<const unsigned char*>(
+            "W - Move Up | S - Move Down"
+        )
+    );
+
+    glRasterPos2f(-0.95f, 0.82f);
+
+    glutBitmapString(
+        GLUT_BITMAP_HELVETICA_18,
+        reinterpret_cast<const unsigned char*>(
+            "A - Move Left | D - Move Right | R - Reset"
+        )
+    );
+}
